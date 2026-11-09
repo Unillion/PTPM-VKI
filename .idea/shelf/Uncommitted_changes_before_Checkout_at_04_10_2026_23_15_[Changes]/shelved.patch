@@ -1,0 +1,95 @@
+Index: logger.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import logging\r\nimport os\r\nimport sys\r\n\r\n\r\ndef setup_logging(log_dir: str = \"logs\", log_file: str = \"file_txt.log\") -> None:\r\n    os.makedirs(log_dir, exist_ok=True)\r\n\r\n    log_format = \"%(asctime)s | [%(levelname)-7s] | %(message)s\"\r\n    date_format = \"%Y-%m-%d %H:%M:%S\"\r\n\r\n    root = logging.getLogger()\r\n    for handler in list(root.handlers):\r\n        root.removeHandler(handler)\r\n\r\n    logging.basicConfig(\r\n        level=logging.ERROR,\r\n        format=log_format,\r\n        datefmt=date_format,\r\n        handlers=[\r\n            logging.StreamHandler(sys.stdout),\r\n            logging.FileHandler(os.path.join(log_dir, log_file), encoding=\"utf-8\"),\r\n        ],\r\n    )\r\n\r\n    logging.info(\"Логгер работ\")
+===================================================================
+diff --git a/logger.py b/logger.py
+--- a/logger.py	
++++ b/logger.py	
+@@ -14,7 +14,7 @@
+         root.removeHandler(handler)
+ 
+     logging.basicConfig(
+-        level=logging.ERROR,
++        level=logging.DEBUG,
+         format=log_format,
+         datefmt=date_format,
+         handlers=[
+Index: logs/file_txt.log
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>2026-09-28 12:20:39 | [ERROR  ] | Ошибка валидации логина: Логин не может быть пустым | login='', password=<masked:3102f514f96b>, confirm=<masked:3102f514f96b>\r\n2026-09-28 12:20:39 | [ERROR  ] | Ошибка валидации логина: Логин-строка должен содержать минимум 5 символов и состоять только из латиницы, цифр и знака подчёркивания | login='юзер', password=<masked:3102f514f96b>, confirm=<masked:3102f514f96b>\r\n2026-09-28 12:20:39 | [ERROR  ] | Ошибка валидации логина: Логин входит в чёрный список запрещённых | login='admin', password=<masked:3102f514f96b>, confirm=<masked:3102f514f96b>\r\n2026-09-28 12:20:39 | [ERROR  ] | Ошибка валидации логина: Логин входит в чёрный список запрещённых | login='+7-999-999-9999', password=<masked:3102f514f96b>, confirm=<masked:3102f514f96b>\r\n2026-09-28 12:20:39 | [ERROR  ] | Ошибка валидации пароля: Пароль должен содержать минимум 7 символов | login='user_02', password=<masked:a665a4592042>, confirm=<masked:a665a4592042>\r\n2026-09-28 12:20:39 | [ERROR  ] | Ошибка валидации пароля: Пароль может содержать только кириллицу, цифры и спецсимволы | login='user_03', password=<masked:65c21921ca10>, confirm=<masked:65c21921ca10>\r\n2026-09-28 12:20:39 | [ERROR  ] | Ошибка валидации пароля: Пароль должен содержать минимум одну заглавную букву | login='user_04', password=<masked:5c33570aa75c>, confirm=<masked:5c33570aa75c>\r\n2026-09-28 12:20:39 | [ERROR  ] | Ошибка валидации пароля: Пароль должен содержать минимум одну строчную букву | login='user_05', password=<masked:4b886f447f7b>, confirm=<masked:4b886f447f7b>\r\n2026-09-28 12:20:39 | [ERROR  ] | Ошибка валидации пароля: Пароль должен содержать минимум одну цифру | login='user_06', password=<masked:031070daadcc>, confirm=<masked:031070daadcc>\r\n2026-09-28 12:20:39 | [ERROR  ] | Ошибка валидации пароля: Пароль должен содержать минимум один спецсимвол | login='user_07', password=<masked:b02064019c7e>, confirm=<masked:b02064019c7e>\r\n2026-09-28 12:20:39 | [ERROR  ] | Пароль и подтверждение пароля не совпадают | login='user_08', password=<masked:3102f514f96b>, confirm=<masked:b2a9fe83e54f>\r\n2026-09-28 12:20:39 | [ERROR  ] | Подтверждение пароля не может быть пустым | login='user_09', password=<masked:3102f514f96b>, confirm=<masked:e3b0c44298fc>\r\n2026-09-28 12:20:39 | [ERROR  ] | Пароль и подтверждение пароля не совпадают | login='aaa2324234', password=<masked:9e620c22c58f>, confirm=<masked:44f1cc3b6f75>\r\n
+===================================================================
+diff --git a/logs/file_txt.log b/logs/file_txt.log
+--- a/logs/file_txt.log	
++++ b/logs/file_txt.log	
+@@ -11,3 +11,36 @@
+ 2026-09-28 12:20:39 | [ERROR  ] | Пароль и подтверждение пароля не совпадают | login='user_08', password=<masked:3102f514f96b>, confirm=<masked:b2a9fe83e54f>
+ 2026-09-28 12:20:39 | [ERROR  ] | Подтверждение пароля не может быть пустым | login='user_09', password=<masked:3102f514f96b>, confirm=<masked:e3b0c44298fc>
+ 2026-09-28 12:20:39 | [ERROR  ] | Пароль и подтверждение пароля не совпадают | login='aaa2324234', password=<masked:9e620c22c58f>, confirm=<masked:44f1cc3b6f75>
++2026-10-04 23:14:57 | [INFO   ] | Логгер работ
++2026-10-04 23:14:57 | [INFO   ] | Приложение запущено
++2026-10-04 23:14:57 | [INFO   ] | Запрос на регистрацию: login='user_01', password=<masked:3102f514f96b>, confirm=<masked:3102f514f96b>
++2026-10-04 23:14:57 | [INFO   ] | Успешная валидация регистрации: login='user_01', password=<masked:3102f514f96b>
++2026-10-04 23:14:57 | [INFO   ] | Запрос на регистрацию: login='', password=<masked:3102f514f96b>, confirm=<masked:3102f514f96b>
++2026-10-04 23:14:57 | [ERROR  ] | Ошибка валидации логина: Логин не может быть пустым | login='', password=<masked:3102f514f96b>, confirm=<masked:3102f514f96b>
++2026-10-04 23:14:57 | [INFO   ] | Запрос на регистрацию: login='юзер', password=<masked:3102f514f96b>, confirm=<masked:3102f514f96b>
++2026-10-04 23:14:57 | [ERROR  ] | Ошибка валидации логина: Логин-строка должен содержать минимум 5 символов и состоять только из латиницы, цифр и знака подчёркивания | login='юзер', password=<masked:3102f514f96b>, confirm=<masked:3102f514f96b>
++2026-10-04 23:14:57 | [INFO   ] | Запрос на регистрацию: login='admin', password=<masked:3102f514f96b>, confirm=<masked:3102f514f96b>
++2026-10-04 23:14:57 | [ERROR  ] | Ошибка валидации логина: Логин входит в чёрный список запрещённых | login='admin', password=<masked:3102f514f96b>, confirm=<masked:3102f514f96b>
++2026-10-04 23:14:57 | [INFO   ] | Запрос на регистрацию: login='+7-999-999-9999', password=<masked:3102f514f96b>, confirm=<masked:3102f514f96b>
++2026-10-04 23:14:57 | [ERROR  ] | Ошибка валидации логина: Логин входит в чёрный список запрещённых | login='+7-999-999-9999', password=<masked:3102f514f96b>, confirm=<masked:3102f514f96b>
++2026-10-04 23:14:57 | [INFO   ] | Запрос на регистрацию: login='user_02', password=<masked:a665a4592042>, confirm=<masked:a665a4592042>
++2026-10-04 23:14:57 | [ERROR  ] | Ошибка валидации пароля: Пароль должен содержать минимум 7 символов | login='user_02', password=<masked:a665a4592042>, confirm=<masked:a665a4592042>
++2026-10-04 23:14:57 | [INFO   ] | Запрос на регистрацию: login='user_03', password=<masked:65c21921ca10>, confirm=<masked:65c21921ca10>
++2026-10-04 23:14:57 | [ERROR  ] | Ошибка валидации пароля: Пароль может содержать только кириллицу, цифры и спецсимволы | login='user_03', password=<masked:65c21921ca10>, confirm=<masked:65c21921ca10>
++2026-10-04 23:14:57 | [INFO   ] | Запрос на регистрацию: login='user_04', password=<masked:5c33570aa75c>, confirm=<masked:5c33570aa75c>
++2026-10-04 23:14:57 | [ERROR  ] | Ошибка валидации пароля: Пароль должен содержать минимум одну заглавную букву | login='user_04', password=<masked:5c33570aa75c>, confirm=<masked:5c33570aa75c>
++2026-10-04 23:14:57 | [INFO   ] | Запрос на регистрацию: login='user_05', password=<masked:4b886f447f7b>, confirm=<masked:4b886f447f7b>
++2026-10-04 23:14:57 | [ERROR  ] | Ошибка валидации пароля: Пароль должен содержать минимум одну строчную букву | login='user_05', password=<masked:4b886f447f7b>, confirm=<masked:4b886f447f7b>
++2026-10-04 23:14:57 | [INFO   ] | Запрос на регистрацию: login='user_06', password=<masked:031070daadcc>, confirm=<masked:031070daadcc>
++2026-10-04 23:14:57 | [ERROR  ] | Ошибка валидации пароля: Пароль должен содержать минимум одну цифру | login='user_06', password=<masked:031070daadcc>, confirm=<masked:031070daadcc>
++2026-10-04 23:14:57 | [INFO   ] | Запрос на регистрацию: login='user_07', password=<masked:b02064019c7e>, confirm=<masked:b02064019c7e>
++2026-10-04 23:14:57 | [ERROR  ] | Ошибка валидации пароля: Пароль должен содержать минимум один спецсимвол | login='user_07', password=<masked:b02064019c7e>, confirm=<masked:b02064019c7e>
++2026-10-04 23:14:57 | [INFO   ] | Запрос на регистрацию: login='user_08', password=<masked:3102f514f96b>, confirm=<masked:b2a9fe83e54f>
++2026-10-04 23:14:57 | [ERROR  ] | Пароль и подтверждение пароля не совпадают | login='user_08', password=<masked:3102f514f96b>, confirm=<masked:b2a9fe83e54f>
++2026-10-04 23:14:57 | [INFO   ] | Запрос на регистрацию: login='user_09', password=<masked:3102f514f96b>, confirm=<masked:e3b0c44298fc>
++2026-10-04 23:14:57 | [ERROR  ] | Подтверждение пароля не может быть пустым | login='user_09', password=<masked:3102f514f96b>, confirm=<masked:e3b0c44298fc>
++2026-10-04 23:14:57 | [INFO   ] | Запрос на регистрацию: login='john.doe@example.com', password=<masked:64d7813b8273>, confirm=<masked:64d7813b8273>
++2026-10-04 23:14:57 | [INFO   ] | Успешная валидация регистрации: login='john.doe@example.com', password=<masked:64d7813b8273>
++2026-10-04 23:14:57 | [INFO   ] | Запрос на регистрацию: login='aaa2324234', password=<masked:9e620c22c58f>, confirm=<masked:44f1cc3b6f75>
++2026-10-04 23:14:57 | [ERROR  ] | Пароль и подтверждение пароля не совпадают | login='aaa2324234', password=<masked:9e620c22c58f>, confirm=<masked:44f1cc3b6f75>
++2026-10-04 23:14:57 | [INFO   ] | Приложение завершено
+Index: .idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectModuleManager\">\r\n    <modules>\r\n      <module fileurl=\"file://$PROJECT_DIR$/.idea/PTPM-VKI1.iml\" filepath=\"$PROJECT_DIR$/.idea/PTPM-VKI1.iml\" />\r\n    </modules>\r\n  </component>\r\n</project>
+===================================================================
+diff --git a/.idea/modules.xml b/.idea/modules.xml
+--- a/.idea/modules.xml	
++++ b/.idea/modules.xml	
+@@ -2,7 +2,7 @@
+ <project version="4">
+   <component name="ProjectModuleManager">
+     <modules>
+-      <module fileurl="file://$PROJECT_DIR$/.idea/PTPM-VKI1.iml" filepath="$PROJECT_DIR$/.idea/PTPM-VKI1.iml" />
++      <module fileurl="file://$PROJECT_DIR$/.idea/PTPM-VKI.iml" filepath="$PROJECT_DIR$/.idea/PTPM-VKI.iml" />
+     </modules>
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectRootManager\" version=\"2\" project-jdk-name=\"Python 3.13 (PTPM-VKI1)\" project-jdk-type=\"Python SDK\" />\r\n</project>
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	
++++ b/.idea/misc.xml	
+@@ -1,4 +1,4 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.13 (PTPM-VKI1)" project-jdk-type="Python SDK" />
++  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.11" project-jdk-type="Python SDK" />
+ </project>
+\ No newline at end of file
